@@ -35,6 +35,9 @@ $(document).ready(async function () {
 	$("#btnInviaPop").on("click", function () {
 		applicaDatiImg();
 	});
+	$("#btnEliminaPop").on("click", function () {
+		eliminaFoto();
+	});
 	$(".noInfo").hide();
 	$('#divNormale').hide();
 	$('#popupOp').hide();
@@ -708,12 +711,22 @@ function applicaDatiImg() {
 	let rq = inviaRichiesta("post", "/api/modificaDescrizioneFoto/" + $("#idInfo").val(), { "descrizione": descrizione, "url": img });
 	rq.then(function (response) {
 		console.log(response.data);
-		let rq = inviaRichiesta("get", "/api/getPerizia/" + _idInfo);
-		rq.then(function (response) {
-			modificaInfo(response.data);
-			$("#overlay").fadeOut(500);
-		});
-		rq.catch(errore);
+		modificaInfo(response.data);
+		$("#overlay").fadeOut(500);
+
+	});
+	rq.catch(errore);
+}
+
+function eliminaFoto() {
+	let _id = _idInfo;
+	let img = $("#imgPopup").attr("src");
+	let descrizione = $("#txtAreaPop").val();
+	let rq = inviaRichiesta("post", "/api/deleteFotoPerizia/" + _id, { "url": img, "descrizione": descrizione });
+	rq.then(function (response) {
+		modificaInfo(response.data);
+		$("#overlay").fadeOut(500);
+
 	});
 	rq.catch(errore);
 }
