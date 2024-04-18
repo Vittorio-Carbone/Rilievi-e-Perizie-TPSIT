@@ -353,3 +353,7 @@ MigrationBackup/
 environment.*
 .env
 keys/*
+
+*.pem
+*.txt
+*.crt
