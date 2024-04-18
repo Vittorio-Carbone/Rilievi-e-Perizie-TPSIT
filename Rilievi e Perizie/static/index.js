@@ -201,9 +201,7 @@ $(document).ready(async function () {
 		let codice = cod[1];
 		let fileInput = document.querySelector("#fotoInputInfo");
 		let p = []
-		console.log(fileInput.files.length);
 		for (let i = 0; i < fileInput.files.length; i++) {
-			console.log("AAAAAA");
 			let file = fileInput.files[i];
 			let imgBase64 = await base64Convert(file).catch((err) => alert(`Errore conversione file: ${err}`));
 			p.push(inviaRichiesta("POST", "/api/addBase64CloudinaryImage", { "codOp": codice, imgBase64 }));
@@ -634,7 +632,7 @@ function modificaInfo(periziaEdit) {
 	$("#fotoInfo").empty();
 	for (let foto of periziaEdit.foto) {
 		// Crea un nuovo elemento "input" di tipo "file"
-		let inputFile = $(`<img alt="foto" class="fotoPerizia"> `);
+		let inputFile = $(`<img style="margin-bottom:5px;"alt="foto" class="fotoPerizia"> `);
 
 		// Imposta il valore dell'attributo "value" con il nome della foto
 		inputFile.prop("src", foto.url);
