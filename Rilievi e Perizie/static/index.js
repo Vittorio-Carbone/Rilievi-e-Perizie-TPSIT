@@ -550,6 +550,7 @@ function svuotaCampi() {
 
 	document.querySelector("#foto").value = "";
 	document.querySelector("#fotoPer").value = "";
+	document.querySelector("#fotoInputInfo").value = "";
 
 	$("#nome").val("");
 	$("#cognome").val("");

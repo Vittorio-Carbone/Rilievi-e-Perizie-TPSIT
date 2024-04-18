@@ -53,7 +53,7 @@
 /* ====================================================== PAGINA EDIT ========================================= */
 #fotoInfo {
 	max-height: 300px;
-	overflow-y: auto; /* Abilita lo scrolling verticale se necessario */
+	overflow-y: auto; 
 }
 #editDiv {
     display: flex;
