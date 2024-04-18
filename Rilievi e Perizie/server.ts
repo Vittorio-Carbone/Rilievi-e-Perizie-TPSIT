@@ -585,7 +585,7 @@ app.post("/api/addFotoPerizia/:id", async (req, res, next) => {
     const client = new MongoClient(connectionString);
     await client.connect();
     const collection = client.db(DBNAME).collection("perizie");
-    let rq = collection.updateOne({ "_id": id }, {"$push": {"foto": JSON.stringify(imgs)}}); 
+    let rq = collection.updateOne({ "_id": id }, {"$push": {"foto": { "$each": imgs }}}); 
     rq.then((data)=> res.send(data));
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
