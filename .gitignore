@@ -352,7 +352,7 @@ MigrationBackup/
 # Private Keys
 environment.*
 .env
-keys/*
+keys/
 
 *.pem
 *.txt
