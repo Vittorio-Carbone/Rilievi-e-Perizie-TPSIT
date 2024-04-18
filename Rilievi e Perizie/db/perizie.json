@@ -1,0 +1,132 @@
+[
+  {
+    "codOperatore": "1",
+    "data": "03-04-2024",
+    "ora": "08:36",
+    "coordinate": "44.549080, 7.727624",
+    "descrizione": "Macchina distrutta",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "1",
+    "data": "10-04-2024",
+    "ora": "10:52",
+    "coordinate": "44.595013, 7.658485",
+    "descrizione": "Tutto rotto",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "2",
+    "data": "01-04-2024",
+    "ora": "21:17",
+    "coordinate": "44.554432, 7.720200",
+    "descrizione": "Macchina rotta",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "2",
+    "data": "10-04-2024",
+    "ora": "12:30",
+    "coordinate": "44.605793, 7.657921",
+    "descrizione": "Incidente in strada",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "3",
+    "data": "11-02-2024",
+    "ora": "16:42",
+    "coordinate": "44.558621, 7.727195",
+    "descrizione": "Moto distrutta",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "3",
+    "data": "09-04-2024",
+    "ora": "08:15",
+    "coordinate": "44.596634, 7.651652",
+    "descrizione": "Collisione con un'altra auto",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "4",
+    "data": "07-04-2024",
+    "ora": "14:20",
+    "coordinate": "44.548936, 7.711345",
+    "descrizione": "Auto danneggiata",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "4",
+    "data": "11-04-2024",
+    "ora": "09:05",
+    "coordinate": "44.601252, 7.659827",
+    "descrizione": "Incidente durante la consegna",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "5",
+    "data": "05-04-2024",
+    "ora": "17:30",
+    "coordinate": "44.553842, 7.717991",
+    "descrizione": "Auto in panne",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  },
+  {
+    "codOperatore": "5",
+    "data": "08-04-2024",
+    "ora": "10:10",
+    "coordinate": "44.590772, 7.666128",
+    "descrizione": "Tamponamento posteriore",
+    "foto": [
+      {
+        "url": "",
+        "descrizioneFoto": ""
+      }
+    ]
+  }
+]
