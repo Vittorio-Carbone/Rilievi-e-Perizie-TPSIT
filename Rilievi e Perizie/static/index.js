@@ -195,13 +195,37 @@ $(document).ready(async function () {
 	};
 
 
-	function modificaInformazioni() {
+	async function modificaInformazioni() {
+
+		document.querySelector("#fotoInputInfo").value = "";
+		let cod = $("#operatoreInfo").splice(" ");
+		let codice = cod[1];
+		let fileInput = document.querySelector("#fotoInputInfo");
+		let p = []
+		for (let i = 0; i < fileInput.files.length; i++) {
+			let file = fileInput.files[i];
+			let imgBase64 = await base64Convert(file).catch((err) => alert(`Errore conversione file: ${err}`));
+			p.push(inviaRichiesta("POST", "/api/addBase64CloudinaryImage", { "codOp": codice, imgBase64 }));
+		}
+		let imgs;
+		try {
+
+			imgs = (await Promise.all(p)).map(r => {
+				return { "url": r.data.url, "descrizioneFoto": "" }
+			})
+		}
+		catch (err) {
+			console.log(err);
+			return;
+		}
+
+		console.log(JSON.stringify(imgs));
 		let jsonInfo = {
 			"descrizione": $("#descrizioneInfo").val()
 		};
 		let rq = inviaRichiesta("patch", "/api/modificaInfo/" + $("#idInfo").val(), { jsonInfo });
 		rq.then(function (data) {
-
+			let rq=inviaRichiesta()
 			caricaMarkers();
 		});
 		rq.catch(errore);
@@ -390,17 +414,17 @@ $(document).ready(async function () {
 				p.push(inviaRichiesta("POST", "/api/addBase64CloudinaryImage", { "codOp": $("#codOperatore").val(), imgBase64 }));
 			}
 			let imgs;
-			try{
-				
+			try {
+
 				imgs = (await Promise.all(p)).map(r => {
 					return { "url": r.data.url, "descrizioneFoto": "descrizione immagine" }
 				})
 			}
-			catch(err){
+			catch (err) {
 				console.log(err);
 				return;
 			}
-			
+
 			console.log(JSON.stringify(imgs));
 			let dataSplit = $("#data").val().split("-");
 			let data = dataSplit[2] + "-" + dataSplit[1] + "-" + dataSplit[0];
