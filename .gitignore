@@ -352,3 +352,4 @@ MigrationBackup/
 # Private Keys
 environment.*
 .env
+keys/*
