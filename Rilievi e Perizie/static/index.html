@@ -2,7 +2,7 @@
 <html lang="it">
 
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Assicurazione - Admin</title>
   <link rel="icon" href="img/icoVallauri.png" type="image/png" />
@@ -20,6 +20,23 @@
 </head>
 
 <body>
+  <div id="overlay">
+    <div class="popupImg">
+      <div id="closeImg" style="text-align: right !important; margin-bottom: 10px;">&times;</div>
+      <img src="" alt="" id="imgPopup"><br>
+      <div style="text-align: center; margin-top: 20px;">
+        <label for="txtAreaPop"><b>Descrizione della foto: </b></label>
+        <textarea name="txtAreaPop" id="txtAreaPop" cols="20" rows="3"></textarea>
+      </div>
+      <br>
+      <div style="text-align: center;">
+        <button type="button" class="btn btn-primary btnElimina" id="btnEliminaPop"
+          style="margin-bottom: 10px; margin-right: 10px;">Elimina foto</button>
+        <button type="button" style="margin-bottom: 10px;margin-left: 10px;" class="btn btn-primary btnInvia"
+          id="btnInviaPop">Applica modifiche</button>
+      </div>
+    </div>
+  </div>
   <div id="containerAdmin">
     <nav class="navbar">
       <div class="navbar-left">
@@ -62,10 +79,11 @@
             style="margin-bottom: 10px; margin-left: 10px;">Annulla</button>
           <button type="button" class="btn btn-primary btnInvia" id="btnInviaInfo"
             style="margin-bottom: 10px; margin-left: 10px;">Applica modifiche</button>
-            <button type="button" class="btn btn-primary btnElimina" id="btnEliminaInfo"
+          <button type="button" class="btn btn-primary btnElimina" id="btnEliminaInfo"
             style="margin-bottom: 10px; margin-left: 10px;">Elimina</button>
         </div>
         <h3 style="margin-top: 10px;">Selezionare un perito per vedere le sue perizie</h3>
+
         <div id="operatori">
 
         </div>

@@ -7,9 +7,11 @@ let codOperatore = 0;
 var markers = [];
 let perizie = [];
 let userLogged;
+let _idInfo;
 $(document).ready(async function () {
 	controllaLogIn();
 
+	$("#overlay").hide();
 	$("#lblMsg").hide();
 	$("#lblMsgSucc").hide();
 	$("#visualizzaInfo").hide();
@@ -29,6 +31,9 @@ $(document).ready(async function () {
 	$("#editInfo").on("click", function () {
 		home.fadeOut();
 		edit.fadeIn();
+	});
+	$("#btnInviaPop").on("click", function () {
+		applicaDatiImg();
 	});
 	$(".noInfo").hide();
 	$('#divNormale').hide();
@@ -225,14 +230,13 @@ $(document).ready(async function () {
 		let rq = inviaRichiesta("patch", "/api/modificaInfo/" + $("#idInfo").val(), { jsonInfo });
 		rq.then(function (data) {
 			if (imgs.length > 0) {
-				let req = inviaRichiesta("post", "/api/addFotoPerizia/" + $("#idInfo").val(), {imgs});
+				let req = inviaRichiesta("post", "/api/addFotoPerizia/" + $("#idInfo").val(), { imgs });
 				req.then(function (data) {
 					caricaMarkers();
 				});
 				req.catch(errore);
 			}
-			else
-			{
+			else {
 				console.log("Nessuna foto da aggiungere")
 				caricaMarkers();
 			}
@@ -484,6 +488,9 @@ $(document).ready(async function () {
 		localStorage.removeItem("token")
 		window.location.href = "login.html"
 	});
+	$("#closeImg").on("click", function () {
+		$("#overlay").fadeOut(1000);
+	});
 	$("#buttonInfo").on("click", function () {
 		//scroll to top
 		window.scroll({
@@ -597,7 +604,7 @@ function svuotaCampi() {
 
 
 function modificaInfo(periziaEdit) {
-	
+
 	document.querySelector("#fotoInputInfo").value = "";
 	// scroll to #visualizzaInfo
 	setTimeout(function () {
@@ -632,7 +639,7 @@ function modificaInfo(periziaEdit) {
 	$("#fotoInfo").empty();
 	for (let foto of periziaEdit.foto) {
 		// Crea un nuovo elemento "input" di tipo "file"
-		let inputFile = $(`<img style="margin-bottom:5px;"alt="foto" class="fotoPerizia"> `);
+		let inputFile = $(`<img style="margin-bottom:5px;"alt="foto" class="fotoPerizia" onClick="visualizzaFoto('${foto.url}', '${foto.descrizioneFoto}','${codOperatore}','${periziaEdit._id}')"> `);
 
 		// Imposta il valore dell'attributo "value" con il nome della foto
 		inputFile.prop("src", foto.url);
@@ -682,4 +689,31 @@ function base64Convert(fileObject) {
 			reject(err);
 		}
 	});
+}
+
+
+
+function visualizzaFoto(url, descrizione, codOperatore, _id) {
+	_idInfo = _id;
+
+	$("#imgPopup").attr("src", url);
+	$("#txtAreaPop").val(descrizione);
+
+	$("#overlay").fadeIn(1000);
+}
+
+function applicaDatiImg() {
+	let descrizione = $("#txtAreaPop").val();
+	let img = $("#imgPopup").attr("src");
+	let rq = inviaRichiesta("post", "/api/modificaDescrizioneFoto/" + $("#idInfo").val(), { "descrizione": descrizione, "url": img });
+	rq.then(function (response) {
+		console.log(response.data);
+		let rq = inviaRichiesta("get", "/api/getPerizia/" + _idInfo);
+		rq.then(function (response) {
+			modificaInfo(response.data);
+			$("#overlay").fadeOut(500);
+		});
+		rq.catch(errore);
+	});
+	rq.catch(errore);
 }
