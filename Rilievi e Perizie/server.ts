@@ -577,6 +577,20 @@ app.post("/api/addBase64CloudinaryImage", (req, res, next) => {
 });
 
 
+
+app.post("/api/addFotoPerizia/:id", async (req, res, next) => {
+    let id = new ObjectId(req["params"].id);
+    let imgs = req["body"].imgs;
+    console.log(imgs)
+    const client = new MongoClient(connectionString);
+    await client.connect();
+    const collection = client.db(DBNAME).collection("perizie");
+    let rq = collection.updateOne({ "_id": id }, {"$push": {"foto": imgs[0]}}); 
+    rq.then((data)=> res.send(data));
+    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
+    rq.finally(() => client.close());
+});
+
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//

@@ -197,12 +197,13 @@ $(document).ready(async function () {
 
 	async function modificaInformazioni() {
 
-		document.querySelector("#fotoInputInfo").value = "";
 		let cod = $("#operatoreInfo").splice(" ");
 		let codice = cod[1];
 		let fileInput = document.querySelector("#fotoInputInfo");
 		let p = []
+		console.log(fileInput.files.length);
 		for (let i = 0; i < fileInput.files.length; i++) {
+			console.log("AAAAAA");
 			let file = fileInput.files[i];
 			let imgBase64 = await base64Convert(file).catch((err) => alert(`Errore conversione file: ${err}`));
 			p.push(inviaRichiesta("POST", "/api/addBase64CloudinaryImage", { "codOp": codice, imgBase64 }));
@@ -225,8 +226,18 @@ $(document).ready(async function () {
 		};
 		let rq = inviaRichiesta("patch", "/api/modificaInfo/" + $("#idInfo").val(), { jsonInfo });
 		rq.then(function (data) {
-			let rq=inviaRichiesta()
-			caricaMarkers();
+			if (imgs.length > 0) {
+				let req = inviaRichiesta("post", "/api/addFotoPerizia/" + $("#idInfo").val(), {imgs});
+				req.then(function (data) {
+					caricaMarkers();
+				});
+				req.catch(errore);
+			}
+			else
+			{
+				console.log("Nessuna foto da aggiungere")
+				caricaMarkers();
+			}
 		});
 		rq.catch(errore);
 	}
@@ -588,6 +599,8 @@ function svuotaCampi() {
 
 
 function modificaInfo(periziaEdit) {
+	
+	document.querySelector("#fotoInputInfo").value = "";
 	// scroll to #visualizzaInfo
 	setTimeout(function () {
 		let element = document.querySelector("#visualizzaInfo");
