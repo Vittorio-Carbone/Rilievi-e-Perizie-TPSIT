@@ -3,35 +3,38 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Colore di sfondo con opacità */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 998; /* Inferiore al popup */
+	background-color: rgba(0, 0, 0, 0.5);
+	/* Colore di sfondo con opacità */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 998;
+	/* Inferiore al popup */
 }
 
 .popupImg {
 	width: auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 999; /* Sovrapposto all'overlay */
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	position: relative;
+	z-index: 999;
+	/* Sovrapposto all'overlay */
 }
 
 #closeImg {
 
-    font-size: 24px;
-    cursor: pointer;
+	font-size: 24px;
+	cursor: pointer;
 }
 
 #closeImg:hover {
 	color: red;
-    font-size: 24px;
-    cursor: pointer;
+	font-size: 24px;
+	cursor: pointer;
 }
 
 #imgPopup {
@@ -53,50 +56,52 @@
 
 
 /* ====================================================== NAVBAR ========================================= */
-.btnLogout:hover{
+.btnLogout:hover {
 	color: red;
 	scale: 1.3;
 }
-.btnLogout{
+
+.btnLogout {
 	color: black;
 	scale: 1;
 }
+
 .active {
 	font-weight: 700;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	color: black;
-    background-color: #f0f0f0;
-    padding: 10px 20px;
+	background-color: #f0f0f0;
+	padding: 10px 20px;
 }
 
 .navbar-left {
-    flex: 1;
+	flex: 1;
 }
 
 .navbar-right {
-    flex: 1;
-    text-align: right;
+	flex: 1;
+	text-align: right;
 }
 
 .logo {
-    font-size: 2rem;
-    color: black;
+	font-size: 2rem;
+	color: black;
 	font-weight: bold;
 }
 
 .navbar-right span {
-    color: black;
-    margin-left: 30px;
-    cursor: pointer;
+	color: black;
+	margin-left: 30px;
+	cursor: pointer;
 }
 
 .navbar-right span:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 
@@ -114,69 +119,76 @@
 	line-height: 1.5;
 	border: 2px solid #ccc;
 	border-radius: 8px;
-	resize: vertical; /* Per consentire solo la regolazione verticale della dimensione */
+	resize: vertical;
+	/* Per consentire solo la regolazione verticale della dimensione */
 	transition: border-color 0.3s ease;
-  }
-  
-  /* Stile quando la textarea è in focus */
-  #descrizioneInfo:focus {
-	border-color: #007bff; /* Colore del bordo evidenziato */
-	outline: none; /* Rimuove l'outline di default */
-  }
-  
-  /* Stile per il testo placeholder */
-  #descrizioneInfo::placeholder {
-	color: #999; /* Colore del testo del placeholder */
-  }
-  
-  /* Stile per il bordo quando la textarea ha un errore */
-  #descrizioneInfo.error {
-	border-color: #ff0000; /* Colore del bordo rosso per indicare un errore */
-  }
-  
-  /* Stile per il testo quando la textarea ha un errore */
-  #descrizioneInfo.error::placeholder {
-	color: #ff0000; /* Colore del testo del placeholder quando c'è un errore */
-  }
-  
+}
+
+/* Stile quando la textarea è in focus */
+#descrizioneInfo:focus {
+	border-color: #007bff;
+	/* Colore del bordo evidenziato */
+	outline: none;
+	/* Rimuove l'outline di default */
+}
+
+/* Stile per il testo placeholder */
+#descrizioneInfo::placeholder {
+	color: #999;
+	/* Colore del testo del placeholder */
+}
+
+/* Stile per il bordo quando la textarea ha un errore */
+#descrizioneInfo.error {
+	border-color: #ff0000;
+	/* Colore del bordo rosso per indicare un errore */
+}
+
+/* Stile per il testo quando la textarea ha un errore */
+#descrizioneInfo.error::placeholder {
+	color: #ff0000;
+	/* Colore del testo del placeholder quando c'è un errore */
+}
+
 
 #fotoInfo {
 	max-height: 300px;
-	overflow-y: auto; 
+	overflow-y: auto;
 }
+
 #editDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .contenitore {
-    width: 80%;
-    justify-content: center;
-    align-items: center;
+	width: 80%;
+	justify-content: center;
+	align-items: center;
 }
 
 .button-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
 }
 
 .button {
-    padding: 15px 30px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-    font-size: 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+	padding: 15px 30px;
+	border: none;
+	background-color: #333;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
 }
 
 .button:hover {
-    background-color: #555;
-    transform: scale(1.1);
+	background-color: #555;
+	transform: scale(1.1);
 }
 
 /* =========================================== AGGIUNGI OPERATORE ======================================= */
@@ -204,20 +216,23 @@
 	font-weight: bold;
 	cursor: pointer;
 }
-#closePopup:hover{
-	color: red; 	
+
+#closePopup:hover {
+	color: red;
 }
 
-.btnAnnulla{
+.btnAnnulla {
 	background-color: white !important;
 	color: black !important;
 	border: 3px solid black !important;
 	cursor: pointer !important;
 }
-.btnAnnulla:hover{
+
+.btnAnnulla:hover {
 	background-color: rgb(216, 216, 216) !important;
 }
-.btn-primary{
+
+.btn-primary {
 	border: 3px solid black !important;
 }
 
@@ -232,7 +247,8 @@
 	width: 100%;
 	border-radius: 10px;
 }
-#title{
+
+#title {
 	text-align: center;
 	padding-top: 20px !important;
 }
@@ -278,20 +294,28 @@
 	margin-bottom: 15px;
 }
 
-#divDeleteOp{
+#divDeleteOp {
 	border-radius: 15px !important;
 	margin-top: 25px !important;
 	margin-bottom: 50px !important;
-	width: 400px; /* Imposta la larghezza del div */
-	padding: 30px; /* Aggiunge spazio interno al div */
-	border: 1px solid #ccc; /* Aggiunge un bordo al div */
-	border-radius: 5px; /* Aggiunge i bordi arrotondati */
-	background-color: white; /* Imposta il colore dello sfondo */
-	margin: 0 auto; /* Centra il div orizzontalmente */
-	border: 2px solid black; /* Aggiunge un bordo al div */
-  
+	width: 400px;
+	/* Imposta la larghezza del div */
+	padding: 30px;
+	/* Aggiunge spazio interno al div */
+	border: 1px solid #ccc;
+	/* Aggiunge un bordo al div */
+	border-radius: 5px;
+	/* Aggiunge i bordi arrotondati */
+	background-color: white;
+	/* Imposta il colore dello sfondo */
+	margin: 0 auto;
+	/* Centra il div orizzontalmente */
+	border: 2px solid black;
+	/* Aggiunge un bordo al div */
+
 }
-#btnEliminaInfo{
+
+#btnEliminaInfo {
 	background-color: #f44336;
 	color: white;
 	border: 0px;
@@ -300,7 +324,8 @@
 	cursor: pointer;
 
 }
-#btnEliminaPop{
+
+#btnEliminaPop {
 	background-color: #f44336;
 	color: white;
 	border: 0px;
@@ -309,41 +334,53 @@
 	cursor: pointer;
 
 }
+
 #divNormale {
 	border-radius: 15px !important;
 	margin-top: 25px !important;
 	margin-bottom: 50px !important;
-	width: 400px; /* Imposta la larghezza del div */
-	padding: 30px; /* Aggiunge spazio interno al div */
-	border: 1px solid #ccc; /* Aggiunge un bordo al div */
-	border-radius: 5px; /* Aggiunge i bordi arrotondati */
-	background-color: white; /* Imposta il colore dello sfondo */
-	margin: 0 auto; /* Centra il div orizzontalmente */
-	border: 2px solid black; /* Aggiunge un bordo al div */
-  }
-  
-  #divNormale label {
+	width: 400px;
+	/* Imposta la larghezza del div */
+	padding: 30px;
+	/* Aggiunge spazio interno al div */
+	border: 1px solid #ccc;
+	/* Aggiunge un bordo al div */
+	border-radius: 5px;
+	/* Aggiunge i bordi arrotondati */
+	background-color: white;
+	/* Imposta il colore dello sfondo */
+	margin: 0 auto;
+	/* Centra il div orizzontalmente */
+	border: 2px solid black;
+	/* Aggiunge un bordo al div */
+}
+
+#divNormale label {
 	display: block;
-	margin-bottom: 5px; 
-  }
-  
-  #divNormale input[type="text"],
-  #divNormale input[type="date"],
-  #divNormale input[type="time"],
-  #divNormale textarea,
-  #divNormale input[type="file"],
-  #divNormale button {
-	width: 100%; /* Imposta la larghezza degli input e dei bottoni al 100% */
-	margin-bottom: 10px; /* Aggiungi spazio tra gli input e i bottoni */
-  }
-  
-  #divNormale button {
-	cursor: pointer; /* Cambia il cursore al passaggio del mouse */
-  }
-  
-  #divNormale .form-group {
-	margin-bottom: 15px; /* Aggiungi spazio tra i gruppi di input */
-  }
+	margin-bottom: 5px;
+}
+
+#divNormale input[type="text"],
+#divNormale input[type="date"],
+#divNormale input[type="time"],
+#divNormale textarea,
+#divNormale input[type="file"],
+#divNormale button {
+	width: 100%;
+	/* Imposta la larghezza degli input e dei bottoni al 100% */
+	margin-bottom: 10px;
+	/* Aggiungi spazio tra gli input e i bottoni */
+}
+
+#divNormale button {
+	cursor: pointer;
+	/* Cambia il cursore al passaggio del mouse */
+}
+
+#divNormale .form-group {
+	margin-bottom: 15px;
+	/* Aggiungi spazio tra i gruppi di input */
+}
 
 
 
@@ -364,7 +401,56 @@
 	margin-top: 20px;
 	margin-bottom: 20px;
 	text-align: center;
+	max-height: 510px;
+	overflow-y: auto;
+
 }
+
+#operatori::-webkit-scrollbar {
+	width: 8px;
+	/* Larghezza della scrollbar */
+}
+
+/* Stile per il "pulgar" della scrollbar */
+#operatori::-webkit-scrollbar-thumb {
+	background-color: #888;
+	/* Colore del "pulgar" */
+	border-radius: 4px;
+	/* Bordi arrotondati */
+}
+
+/* Stile per il tracciato della scrollbar */
+#operatori::-webkit-scrollbar-track {
+	background-color: #f1f1f1;
+	/* Colore del tracciato */
+}
+
+
+#fotoInfo::-webkit-scrollbar {
+	width: 8px;
+	margin-right: 5px;
+	/* Larghezza della scrollbar */
+}
+
+/* Stile per il "pulgar" della scrollbar */
+#fotoInfo::-webkit-scrollbar-thumb {
+	background-color: #888;
+	/* Colore del "pulgar" */
+	border-radius: 4px;
+	/* Bordi arrotondati */
+}
+
+/* Stile per il tracciato della scrollbar */
+#fotoInfo::-webkit-scrollbar-track {
+	background-color: #c6c6c6;
+	/* Colore del tracciato */
+}
+
+
+#fotoInfo::-webkit-scrollbar {
+	width: 8px; /* Larghezza della scrollbar */
+	right: 5px !important; /* Distanza dalla destra */
+  }
 
 .card {
 	width: 195px;
@@ -410,25 +496,25 @@
 
 .form-group {
 	margin-bottom: 15px;
-  }
-  
-  label {
+}
+
+label {
 	display: block;
 	margin-bottom: 5px;
-  }
-  
-  .form-control {
+}
+
+.form-control {
 	width: 100%;
 	padding: 5px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-  }
-  
-  .form-control:focus {
+}
+
+.form-control:focus {
 	border-color: #000;
-  }
-  
-  .btn-primary {
+}
+
+.btn-primary {
 	margin-top: 15px;
 	padding: 5px 10px;
 	border: 1px solid #ccc;
@@ -436,11 +522,11 @@
 	background-color: #000;
 	color: #fff;
 	cursor: pointer;
-  }
-  
-  .btn-primary:hover {
+}
+
+.btn-primary:hover {
 	background-color: #333;
-  }
+}
 
 
 @media (max-width:900px) {
@@ -465,28 +551,29 @@
 
 #containerUsers {
 	text-align: center;
-    font-size: 20px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 20px;
+	font-size: 20px;
+	background-color: #f0f0f0;
+	border-radius: 10px;
+	padding: 20px;
 	width: 300px;
 	margin: 0px auto;
 	margin-top: 10%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 #containerUsers b {
-    color: red;
-    font-size: 24px;
-    display: block;
-    margin-bottom: 10px;
+	color: red;
+	font-size: 24px;
+	display: block;
+	margin-bottom: 10px;
 }
 
 #containerUsers br {
-    display: none; /* Rimuove il margin-bottom causato dal <br> */
+	display: none;
+	/* Rimuove il margin-bottom causato dal <br> */
 }
 
-.msgSuccess{
+.msgSuccess {
 	color: green;
 	background-color: rgb(168, 255, 168);
 	font-size: 16px;
@@ -498,46 +585,62 @@
 
 
 /* ======================================= Form Informazioni =============================================== */
-#visualizzaInfo{
+#visualizzaInfo {
 	box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.5);
 	width: 60%;
 	margin: 0px auto;
 	background-color: #f0f0f0;
-	border-bottom-left-radius: 20px ;
-	border-bottom-right-radius: 20px ;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
-#titoloInfo{
+
+#titoloInfo {
 	padding-top: 20px;
 }
-#operatoreInfo{
+
+#operatoreInfo {
 	color: #7d7d7d;
 	font-weight: 0;
 }
-#coordinateInfo{
+
+#coordinateInfo {
 	color: #7d7d7d;
 	font-weight: 0;
 }
-#fotoInfo{
+
+#fotoInfo {
 	width: 100%;
 	margin: 0px auto;
 	margin-top: 50px;
 	padding-bottom: 50px;
 }
-.fotoPerizia{
+
+.fotoPerizia {
 	width: 40%;
 	border-radius: 10px;
-	margin: 0px 10px ;
+	margin: 0px 10px;
 }
-#buttonInfo{
+
+#buttonInfo {
 	border: 0px;
 	margin-top: 10px;
 	scale: 1.5;
 }
-#buttonInfo:hover{
+
+#buttonInfo:hover {
 	scale: 1.7;
 	color: #f44336;
 }
-#buttonInfo:not(:hover){
+
+#buttonInfo:not(:hover) {
 	scale: 1.5;
 	color: black;
+}
+
+
+@media screen and (max-width: 1000px) {
+	#visualizzaInfo {
+		width: 90%;
+	}
+	
 }

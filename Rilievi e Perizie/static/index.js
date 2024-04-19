@@ -521,12 +521,12 @@ $(document).ready(async function () {
 		});
 	});
 	$("#btnInviaInfo").on("click", function () {
+		modificaInformazioni();
+		$("#visualizzaInfo").slideUp(600);
 		window.scroll({
 			top: 0,
 			behavior: 'smooth'
 		});
-		modificaInformazioni();
-		$("#visualizzaInfo").slideUp(600);
 	});
 
 
