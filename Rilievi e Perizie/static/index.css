@@ -84,7 +84,6 @@
 }
 
 .navbar-right {
-	flex: 1;
 	text-align: right;
 }
 
@@ -642,5 +641,11 @@ label {
 	#visualizzaInfo {
 		width: 90%;
 	}
-	
+}
+
+
+@media screen and (max-width: 600px) {
+	.navbar-right{
+		width: 130px !important;
+	}
 }
