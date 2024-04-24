@@ -54,6 +54,7 @@ $(document).ready(function () {
 				console.log(response.data);
 				$("txtMail").text("Password inviata alla mail: " + $("#usr").val());
 				lblMail.show();
+				_lblErrore.hide();
 			})
 			rq.catch(errore);
 
@@ -94,6 +95,7 @@ $(document).ready(function () {
 			);
 			request.catch(function (err) {
 				if (err.response.status == 401) {
+					$("#lblMail").hide();
 					_lblErrore.show();
 					console.log(err.response.data);
 				}

@@ -225,6 +225,64 @@ app.post("/api/googleLogin", async (req: any, res: any, next: any) => {
     }
 });
 
+
+app.post("/api/nuovaPassword", async (req, res, next) => {
+    // Genero un codice di 6 caratteri
+    let password = Math.random().toString(36).substr(2, 6);
+
+    let username = req["body"].username;
+    const client = new MongoClient(connectionString);
+    await client.connect();
+    const collection = client.db(DBNAME).collection("periti");
+    let rq = collection.updateMany({ "email": username }, { "$set": { "password": _bcrypt.hashSync(password, 10), "newPass": true } });
+    const transporter = _nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.AUTHUSER,
+            pass: process.env.AUTHPASS
+        }
+    });
+
+
+    let mailOptions = {
+        from: process.env.AUTHUSER,
+        to: "vittoriocarbone.vc.vc@gmail.com",
+        subject: "Reimpostazione password",
+        html: `
+          
+        
+          <div class="content" style="padding: 20px;">
+            <h2 style="font-size: 24px; margin-bottom: 10px;">Reimpostazione della password</h2>
+        
+            <p style="font-size: 16px; line-height: 1.5;">Ciao ${username},</p>
+        
+            <p style="font-size: 16px; line-height: 1.5;">Abbiamo ricevuto una richiesta di reimpostazione della password per il tuo account. Se non hai fatto questa richiesta, puoi ignorare questa email.</p>
+        
+            <p style="font-size: 16px; line-height: 1.5;">Altrimenti, la tua nuova password è:</p>
+        
+            <p style="font-size: 16px; line-height: 1.5; font-weight: bold; margin-bottom: 20px; border: 1px solid red; border-radius: 7px; text-align:center; padding: 10px; max-width: 250px">${password}</p>
+        
+            <p style="font-size: 16px; line-height: 1.5;">Ti consigliamo di cambiare la password al più presto possibile.</p>
+            <p style="font-size: 16px; line-height: 1.5;">Effettua il login con questa password per cambiarla</p>
+        
+            <p style="font-size: 16px; line-height: 1.5;">Grazie.</p>
+          </div>
+        `
+    }
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+    rq.then((data) => res.send(data));
+    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
+    rq.finally(() => client.close());
+});
+                                                
+
 // 11. Controllo del token
 app.use("/api/", (req: any, res: any, next: any) => {
     if (!req["body"].skipCheckToken) {
@@ -345,14 +403,14 @@ app.post("/api/addOperator", async (req, res, next) => {
     let mailOptions = {
         from: process.env.AUTHUSER,
         to: "vittoriocarbone.vc.vc@gmail.com",
-        subject: "Reimpostazione password",
+        subject: "Password",
         html: `
           
         
           <div class="content" style="padding: 20px;">
-            <h2 style="font-size: 24px; margin-bottom: 10px;">Reimpostazione della password</h2>
+            <h2 style="font-size: 24px; margin-bottom: 10px;">Eccoti la tua password temporanea.</h2>
         
-            <p style="font-size: 16px; line-height: 1.5;">Ciao,</p>
+            <p style="font-size: 16px; line-height: 1.5;">Ciao ${json.nome} ${json.cognome},</p>
         
             <p style="font-size: 16px; line-height: 1.5;">Eccoti la tua nuova password è:</p>
         
@@ -424,63 +482,6 @@ app.post("/api/addPerizia", async (req, res, next) => {
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
 });
-
-app.post("/api/nuovaPassword", async (req, res, next) => {
-    // Genero un codice di 6 caratteri
-    let password = Math.random().toString(36).substr(2, 6);
-
-    let username = req["body"].username;
-    const client = new MongoClient(connectionString);
-    await client.connect();
-    const collection = client.db(DBNAME).collection("periti");
-    let rq = collection.updateMany({ "email": username }, { "$set": { "password": _bcrypt.hashSync(password, 10), "newPass": true } });
-    const transporter = _nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.AUTHUSER,
-            pass: process.env.AUTHPASS
-        }
-    });
-
-
-    let mailOptions = {
-        from: process.env.AUTHUSER,
-        to: "vittoriocarbone.vc.vc@gmail.com",
-        subject: "Reimpostazione password",
-        html: `
-          
-        
-          <div class="content" style="padding: 20px;">
-            <h2 style="font-size: 24px; margin-bottom: 10px;">Reimpostazione della password</h2>
-        
-            <p style="font-size: 16px; line-height: 1.5;">Ciao ${username},</p>
-        
-            <p style="font-size: 16px; line-height: 1.5;">Abbiamo ricevuto una richiesta di reimpostazione della password per il tuo account. Se non hai fatto questa richiesta, puoi ignorare questa email.</p>
-        
-            <p style="font-size: 16px; line-height: 1.5;">Altrimenti, la tua nuova password è:</p>
-        
-            <p style="font-size: 16px; line-height: 1.5; font-weight: bold; margin-bottom: 20px; border: 1px solid red; border-radius: 7px; text-align:center; padding: 10px; max-width: 250px">${password}</p>
-        
-            <p style="font-size: 16px; line-height: 1.5;">Ti consigliamo di cambiare la password al più presto possibile.</p>
-            <p style="font-size: 16px; line-height: 1.5;">Effettua il login con questa password per cambiarla</p>
-        
-            <p style="font-size: 16px; line-height: 1.5;">Grazie.</p>
-          </div>
-        `
-    }
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-    rq.then((data) => res.send(data));
-    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
-    rq.finally(() => client.close());
-});
-
 
 app.post("/api/cambiaPassword", async (req, res, next) => {
     let id = new ObjectId(req["body"].id);
@@ -629,7 +630,6 @@ app.post("/api/deleteFotoPerizia/:id", async (req, res, next) => {
     let id = new ObjectId(req["params"].id);
     let img = req["body"].url;
     let descrizione = req["body"].descrizione;
-    console.log(id, img, descrizione)
     const client = new MongoClient(connectionString);
     await client.connect();
     const collection = client.db(DBNAME).collection("perizie");

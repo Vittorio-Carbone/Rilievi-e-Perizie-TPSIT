@@ -1,0 +1,7 @@
+{
+  "name": "appOperatori",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

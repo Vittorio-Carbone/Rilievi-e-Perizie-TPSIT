@@ -335,6 +335,7 @@ $(document).ready(async function () {
 		$('#popupOp').slideDown(1000);
 	});
 	async function addOperator() {
+		$("#lblMsg").hide();
 		let fileInput = document.querySelector("#foto");
 		let img;
 		if (fileInput.files.length > 0) {
@@ -367,6 +368,7 @@ $(document).ready(async function () {
 					if (error.response && error.response.status === 409) {
 						$("#lblMsgText").text("Operatore già esistente!");
 						$("#lblMsg").show();
+						$("#lblMsgSucc").hide();
 					}
 				});
 
@@ -458,6 +460,7 @@ $(document).ready(async function () {
 				caricaMarkers();
 				$("#lblMsgTextSucc").text("Perizia aggiunta con successo!");
 				$("#lblMsgSucc").show();
+				$("#lblMsg").hide();
 				$('#divNormale').slideUp(1000);
 				setTimeout(function () {
 					svuotaCampi();
@@ -471,6 +474,12 @@ $(document).ready(async function () {
 				if (error.response && error.response.status === 409) {
 					$("#lblMsgText").text("Perizia già esistente!");
 					$("#lblMsg").show();
+					$("#lblMsgSucc").hide();
+					//scroll to top
+					window.scroll({
+						top: 0,
+						behavior: 'smooth'
+					});
 				}
 			});
 
@@ -567,6 +576,7 @@ $(document).ready(async function () {
 			console.log(response.data)
 			$("#lblMsgTextSucc").text("Operatore eliminato con successo!");
 			$("#lblMsgSucc").show();
+			$("#lblMsg").hide();
 			mostraPeriti();
 			$("#divDeleteOp").slideUp(1000);
 			setTimeout(function () {
@@ -577,8 +587,35 @@ $(document).ready(async function () {
 			if (error.response && error.response.status === 404) {
 				$("#lblMsgText").text("Operatore non trovato!");
 				$("#lblMsg").show();
+				$("#lblMsgSucc").hide();
 			}
 		});
+	}
+	function applicaDatiImg() {
+		let descrizione = $("#txtAreaPop").val();
+		let img = $("#imgPopup").attr("src");
+		let rq = inviaRichiesta("post", "/api/modificaDescrizioneFoto/" + $("#idInfo").val(), { "descrizione": descrizione, "url": img });
+		rq.then(function (response) {
+			modificaInfo(response.data);
+			$("#overlay").fadeOut(500);
+			caricaMarkers();
+	
+		});
+		rq.catch(errore);
+	}
+	
+	function eliminaFoto() {
+		let _id = _idInfo;
+		let img = $("#imgPopup").attr("src");
+		let descrizione = $("#txtAreaPop").val();
+		let rq = inviaRichiesta("post", "/api/deleteFotoPerizia/" + _id, { "url": img, "descrizione": descrizione });
+		rq.then(function (response) {
+			modificaInfo(response.data);
+			caricaMarkers();
+			$("#overlay").fadeOut(500);
+	
+		});
+		rq.catch(errore);
 	}
 });
 
@@ -623,7 +660,7 @@ function modificaInfo(periziaEdit) {
 	let descrizione = periziaEdit.descrizione;
 	let foto = periziaEdit.foto; // Array di oggetti
 	let dateSplit = data.split("-");
-	data = dateSplit[2] + "-" + dateSplit[1] + "-" + dateSplit[0];
+	data = dateSplit[0] + "-" + dateSplit[1] + "-" + dateSplit[2];
 	// $("#_id").val(periziaEdit._id);
 	// $("#codOperatore").val(codOperatore);
 	// $("#coordinate").val(coordinate);
@@ -705,28 +742,3 @@ function visualizzaFoto(url, descrizione, codOperatore, _id) {
 	$("#overlay").fadeIn(1000);
 }
 
-function applicaDatiImg() {
-	let descrizione = $("#txtAreaPop").val();
-	let img = $("#imgPopup").attr("src");
-	let rq = inviaRichiesta("post", "/api/modificaDescrizioneFoto/" + $("#idInfo").val(), { "descrizione": descrizione, "url": img });
-	rq.then(function (response) {
-		console.log(response.data);
-		modificaInfo(response.data);
-		$("#overlay").fadeOut(500);
-
-	});
-	rq.catch(errore);
-}
-
-function eliminaFoto() {
-	let _id = _idInfo;
-	let img = $("#imgPopup").attr("src");
-	let descrizione = $("#txtAreaPop").val();
-	let rq = inviaRichiesta("post", "/api/deleteFotoPerizia/" + _id, { "url": img, "descrizione": descrizione });
-	rq.then(function (response) {
-		modificaInfo(response.data);
-		$("#overlay").fadeOut(500);
-
-	});
-	rq.catch(errore);
-}

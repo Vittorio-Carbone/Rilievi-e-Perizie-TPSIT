@@ -53,8 +53,7 @@ function errore(err) {
 	else if (err.response.status == 200)
 		alert("Formato dei dati non corretto : " + err.response.data);
 	else if (err.response.status == 403) {
-		alert("Sessione scaduta");
-		// window.location.href = "login.html"
+		window.location.href = "login.html"
 	}
 	else {
 		alert("Server Error: " + err.response.status + " - " + err.response.data);

@@ -23,7 +23,12 @@ body {
 	display: none;
 	margin-top: 10px;
   }
-  
+  #lblMail{
+	background-color: #8af6b0;
+	border: 1px solid #008b31;
+	color: #007629;
+	padding: 11px;
+  }
   #lblErrore.show,
   #lblMail.show {
 	display: block;
