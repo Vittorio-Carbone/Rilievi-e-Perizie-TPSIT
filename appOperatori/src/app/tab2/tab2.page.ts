@@ -12,30 +12,14 @@ export class Tab2Page {
   constructor(public alertController: AlertController, public photoService: PhotoService, public actionSheetController: ActionSheetController) { }
 
   next() {
-    let desc = this.photoService.descrizionePhoto;
-    let photos = this.photoService.photos;
-    let data = new Date();
-    let formattedDate = data.toLocaleDateString('it-IT', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour12: false
-    });
-    formattedDate = formattedDate.replace(/\//g, "-");
-    let time = data.getTime();
-    let formattedTime = data.toLocaleTimeString('it-IT', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    });
-    
-    
-    console.log(formattedDate, formattedTime)
+
+    this.descrizionePer();
+
   }
 
-  
-  
-  
+
+
+
 
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
@@ -74,7 +58,7 @@ export class Tab2Page {
   }
   async presentAlertPrompt(position: number) {
     const alert = await this.alertController.create({
-      header: 'Inserisci il testo',
+      header: 'Inserisci la descrizione della foto',
       inputs: [
         {
           name: 'name1',
@@ -95,6 +79,70 @@ export class Tab2Page {
           handler: (data) => {
             this.photoService.descrizionePhoto[position] = data.name1;
             console.log(this.photoService.descrizionePhoto)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+
+  async descrizionePer() {
+    const alert = await this.alertController.create({
+      header: 'Inserisci una descrizione generale per la perizia',
+      inputs: [
+        {
+          name: 'name1',
+          type: 'textarea',
+          placeholder: 'Descrizione generale della perizia'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log(data.name1)
+            let desc = this.photoService.descrizionePhoto;
+            let photos = this.photoService.photos;
+            let date = new Date();
+            let formattedDate = date.toLocaleDateString('it-IT', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour12: false
+            });
+            formattedDate = formattedDate.replace(/\//g, "-");
+            let time = date.getTime();
+            let formattedTime = date.toLocaleTimeString('it-IT', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            });
+            let latLng: string
+
+            const printCurrentPosition = async () => {
+              const coordinates = await Geolocation.getCurrentPosition();
+              latLng = coordinates.coords.latitude + ", " + coordinates.coords.longitude;
+              let perizia = {
+                data: formattedDate,
+                ora: formattedTime,
+                latLng: latLng,
+                descrizione: data.name1,
+              }
+              console.log(perizia);
+            };
+            printCurrentPosition();
+
+
           }
         }
       ]
