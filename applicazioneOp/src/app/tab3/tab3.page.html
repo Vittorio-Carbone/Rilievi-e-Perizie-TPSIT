@@ -5,8 +5,7 @@
     </div>
     <div class="profile-section">
         <div class="profile-picture">
-            <img src="{{user.img}}"
-                alt="Immagine Profilo">
+            <img src="{{user.img}}" alt="Immagine Profilo">
         </div>
         <div class="profile-details">
             <p><strong>Codice operatore:</strong> <span> {{user.codOperatore}}</span></p>
@@ -15,18 +14,41 @@
             <p><strong>Email:</strong> <span> {{user.email}}</span></p>
         </div>
     </div>
+    @if (mappa) {
+        <div id="map">
+            
+        </div>
+        <br>
+        <div class="flex">
+            <div style="font-weight: 400;">
+                <div style="margin-bottom: 10px;"><b>Durata:</b> {{durata}} <br></div>
+                <b>Lunghezza:</b> {{lunghezza}}
+            </div>
+            <div style="font-weight: 400;">
+                <button id="chiudiMap" (click)="chiudiMappa()">Chiudi mappa</button>
+            </div>
+
+        </div>
+        <br>
+    }
     <div id="perizie">
         @for (perizia of perizie; track $index) {
-            <div class="perizia" >
-                <div class="infoPer">
-                    <div class="titlePer">Perizia {{$index+1}}</div>
-                    <div style="display: flex;align-items: center;"><ion-icon name="calendar" style="margin-bottom: 13px; margin-right: 4px;"></ion-icon><div class="datePer">{{perizia.data}}</div></div>
-                    <div style="display: flex;align-items: center;"><ion-icon name="time" style="margin-right: 4px;"></ion-icon><div class="oraPer">{{perizia.ora}}</div></div>
+        <div class="perizia" (click)="caricaMappa(perizia.coordinate)">
+            <div class="infoPer">
+                <div class="titlePer">Perizia {{$index+1}}</div>
+                <div style="display: flex;align-items: center;"><ion-icon name="calendar"
+                        style="margin-bottom: 13px; margin-right: 4px;"></ion-icon>
+                    <div class="datePer">{{perizia.data}}</div>
                 </div>
-                <div class="descPer">
-                    <strong>Descrizione: </strong>{{perizia.descrizione}}
+                <div style="display: flex;align-items: center;"><ion-icon name="time"
+                        style="margin-right: 4px;"></ion-icon>
+                    <div class="oraPer">{{perizia.ora}}</div>
                 </div>
             </div>
+            <div class="descPer">
+                <strong>Descrizione: </strong>{{perizia.descrizione}}
+            </div>
+        </div>
         }
     </div>
 </div>
