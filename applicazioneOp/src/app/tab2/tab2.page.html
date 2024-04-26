@@ -1,0 +1,56 @@
+@if(!log){
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="title" style="padding: 0 !important; padding-left: 10px !important;">Aggiungi perizia</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="next()">
+        <ion-icon name="arrow-forward" class="icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="img">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" *ngFor="let photo of photoService.photos; index as position">
+          <ion-img [src]="photo" (click)="showActionSheet(photo, position)"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <div id="descrizione">
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="addPhotoToGallery()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+}
+@if (log) {
+<div id="body">
+  <div id="passwordChangeForm">
+    <h4>Password dimenticata</h4>
+    <form style="margin-top: 15px;">
+      <div class="form-group">
+        <label for="currentPassword">Password corrente</label>
+        <input type="password" class="form-control" id="currentPassword" placeholder="Inserisci la password corrente" [(ngModel)]="currentPwd" name="passwrodCorrente">
+      </div>
+      <div class="form-group">
+        <label for="newPassword">Nuova password</label>
+        <input type="password" class="form-control" id="newPassword" placeholder="Inserisci la nuova password" [(ngModel)]="newPwd" name="passwordNuova">
+      </div>
+      <div id="lblErrore" *ngIf="lblErr">
+        <strong>Password corrente errata!</strong>
+      </div>
+    </form>
+    <button class="btn btn-primary" id="btnCambia" (click)="changePwd()">Cambia password</button>
+  </div>
+</div>
+}

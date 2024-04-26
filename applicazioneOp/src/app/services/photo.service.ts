@@ -3,12 +3,15 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
+import { DataStorageService } from './data-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhotoService {
-
+  public newPass: boolean = false;
+  public user: any=[];
+  public _id: any;
   public photos: any[] = [];
   public descrizionePhoto: any[] = [];
 
@@ -17,15 +20,13 @@ export class PhotoService {
   private platform: Platform;
   photoService: any;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, private dataStorageService: DataStorageService) {
     this.platform = platform;
   }
 
 
-
   public async addNewToGallery() {
     // Take a photo
-    console.log('addNewToGallery')
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
@@ -35,13 +36,8 @@ export class PhotoService {
     // Save the picture and add it to photo collection
     const savedImageFile = await this.savePicture(capturedPhoto);
     this.photos.unshift(savedImageFile);
-    this.descrizionePhoto.unshift('SA');
+    this.descrizionePhoto.unshift('');
 
-    // Add the image at the beginning of the photo's array
-    // this.photos.unshift({
-    //   filepath: "soon...",
-    //   webviewPath: capturedPhoto.webPath!
-    // });
 
 
   }
@@ -82,11 +78,4 @@ export class PhotoService {
     reader.readAsDataURL(blob);
   });
 
-
-
-}
-
-export interface UserPhoto {
-  filepath: string;
-  webviewPath?: string;
 }

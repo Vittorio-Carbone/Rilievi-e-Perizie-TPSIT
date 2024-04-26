@@ -1,15 +1,48 @@
 import { Component } from '@angular/core';
-import { PhotoService, UserPhoto } from '../services/photo.service';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
+import { PhotoService } from '../services/photo.service';
+import { DataStorageService } from '../services/data-storage.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
-  constructor(public alertController: AlertController, public photoService: PhotoService, public actionSheetController: ActionSheetController) { }
+export class Tab2Page implements OnInit {
+  currentPwd:string="";
+  newPwd:string="";
+  lblErr:boolean=false;
+  log: boolean=false;
+  constructor(private route: ActivatedRoute,private router: Router, private dataStorageService: DataStorageService, public alertController: AlertController, public photoService: PhotoService, public actionSheetController: ActionSheetController) { }
+  ngOnInit(): void {
+    let id;
+    if(this.photoService.user._id==undefined){
+    id = this.route.snapshot.paramMap.get('id');
+    }else{
+      console.log(this.photoService.user);
+      id=this.photoService.user._id;
+    }
+    console.log(id);
+    this.dataStorageService.inviaRichiesta('get', '/getPerito/'+id)?.subscribe({
+      "next": (data: any) => {
+        console.log(data);
+        this.photoService.user=data;
+        if(this.photoService.user.newPass){
+          this.log=true;
+          this.photoService.newPass=true;
+        }
+      },
+      "error": (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+
 
   next() {
 
@@ -47,7 +80,7 @@ export class Tab2Page {
         }
       }, {
         text: 'Descrizione',
-        icon: 'pen',
+        icon: 'pencil-outline',
         handler: () => {
           //cosa fa se clicco su DESCRIZIONE
           this.presentAlertPrompt(position);
@@ -133,12 +166,32 @@ export class Tab2Page {
               const coordinates = await Geolocation.getCurrentPosition();
               latLng = coordinates.coords.latitude + ", " + coordinates.coords.longitude;
               let perizia = {
-                data: formattedDate,
-                ora: formattedTime,
-                latLng: latLng,
-                descrizione: data.name1,
+                "codOperatore": this.photoService.user.codOperatore,
+                "data": formattedDate,
+                "ora": formattedTime,
+                "coordinate": latLng,
+                "descrizione": data.name1,
+                "foto": []
               }
-              console.log(perizia);
+              let foto: any = []
+              let promise:any=[];
+              for (let [index, photo] of photos.entries()) {
+                promise.push(firstValueFrom(this.dataStorageService.inviaRichiesta('post', '/addBase64CloudinaryImage', { "codOp": 1, "imgBase64": photo })!))
+                
+              }
+              foto=await Promise.all(promise);
+              foto=foto.map((data:any,index:number)=>({ "descrizioneFoto": desc[index], "url": data.url }));
+              perizia.foto=foto;
+              this.dataStorageService.inviaRichiesta('post', '/addPerizia', { "newPerizia": perizia })?.subscribe({
+                "next": (data) => {
+                  console.log(data);
+                  this.photoService.photos = [];
+                  this.photoService.descrizionePhoto = [];
+                },
+                "error": (error) => {
+                  console.log(error);
+                }
+              });
             };
             printCurrentPosition();
 
@@ -151,5 +204,22 @@ export class Tab2Page {
     await alert.present();
   }
 
+
+  changePwd(){
+    this.dataStorageService.inviaRichiesta('post', '/cambiaPassword', { "id":this.photoService.user._id,"currentPassword": this.currentPwd,"newPassword": this.newPwd})?.subscribe({
+      "next": (data: any) => {
+        console.log(data);
+        this.photoService.newPass=false;
+        this.log=false;
+      },
+      "error": (error: any) => {
+        console.log(error);
+        this.lblErr=true;
+        setTimeout(() => {
+          this.lblErr=false;
+        })
+      }
+    });
+  }
 }
 

@@ -1,0 +1,122 @@
+html {
+    height: 100%;
+}
+
+#divLog {
+    width: 90% !important;
+    background-color: white;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    padding: 20px 0;
+    border-radius: 15px;
+}
+
+#schedaLogin {
+    background-color: rgb(245, 245, 245);
+    width: 100%;
+    text-align: center;
+    font-size: 25pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    height: 100vh;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.input {
+    width: 220px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 0px solid black;
+    border-bottom: 2px solid black;
+    font-size: 16pt;
+    background-color: white;
+    margin-left: 0px !important;
+    margin-top: 10px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.icon-span {
+    padding: 0.7px;
+    border-bottom: 2px solid black !important;
+}
+.icon-span-pwd {
+    padding: 0.7px;
+    border-bottom: 2px solid black !important;
+}
+
+
+.input-span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.small-icon {
+    font-size: 25px;
+    color: #3188e6;
+}
+
+#btnLogIn {
+    width: 250px;
+    margin: 10px auto;
+    padding: 10px;
+    border: 0px solid black;
+    border-bottom: 2px solid black;
+    font-size: 15pt;
+    background-color: #3188e6;
+    border-radius: 5px;
+}
+
+#btnLogInGoogle {
+    width: 250px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 0px solid black;
+    border-bottom: 2px solid black;
+    font-size: 15pt;
+    background-color: #dc3545;
+    border-radius: 5px;
+    margin-bottom: 10px !important;
+}
+
+#pwdDimenticata {
+    width: 230px !important;
+    text-align: left !important;
+    font-size: 15px;
+    margin: 0px auto;
+    color: #3188e6;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.alert{
+    width: 90% !important;
+    margin: 0 auto;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 10px;
+}
+#lblErrore{
+    color: #b00000;
+    background-color: #ffcad0;
+    border:1px solid #ff0000;
+}
+#lblChange{
+    color: #b00000;
+    background-color: #ffcad0;
+    border:1px solid #ff0000;
+}
+#lblPwd{
+    margin-top: 5px;
+    color: #2f9c19;
+    background-color: #d8ffd0;
+    border:1px solid #2bff00;
+}

@@ -281,7 +281,7 @@ app.post("/api/nuovaPassword", async (req, res, next) => {
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
 });
-                                                
+
 
 // 11. Controllo del token
 app.use("/api/", (req: any, res: any, next: any) => {
@@ -363,6 +363,16 @@ app.get("/api/periti", async (req, res, next) => {
     await client.connect();
     const collection = client.db(DBNAME).collection("periti");
     let rq = collection.find().toArray();
+    rq.then((data) => res.send(data));
+    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
+    rq.finally(() => client.close());
+});
+app.get("/api/getPerito/:id", async (req, res, next) => {
+    let id = new ObjectId(req["params"].id);
+    const client = new MongoClient(connectionString);
+    await client.connect();
+    const collection = client.db(DBNAME).collection("periti");
+    let rq = collection.findOne({ "_id": id });
     rq.then((data) => res.send(data));
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
@@ -456,32 +466,7 @@ app.post("/api/addOperator", async (req, res, next) => {
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
 });
-app.post("/api/addPerizia", async (req, res, next) => {
-    let json = req["body"].newPerizia;
-    console.log(json);
-    const client = new MongoClient(connectionString);
-    await client.connect();
-    const collection = client.db(DBNAME).collection("perizie");
-    let rq = collection.findOne({ "codOperatore": json.codOperatore, "data": json.data, "ora": json.ora, "coordinate": json.coordinate });
-    rq.then(async function (data) {
-        console.log(data);
-        if (data) {
-            res.status(409).send("Perizia già esistente");
 
-        }
-        else {
-            const client = new MongoClient(connectionString);
-            await client.connect();
-            const collection = client.db(DBNAME).collection("perizie");
-            let rq2 = collection.insertOne(json);
-            rq2.then((data) => res.send(data));
-            rq2.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
-            rq2.finally(() => client.close());
-        }
-    });
-    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
-    rq.finally(() => client.close());
-});
 
 app.post("/api/cambiaPassword", async (req, res, next) => {
     let id = new ObjectId(req["body"].id);
@@ -512,6 +497,53 @@ app.post("/api/cambiaPassword", async (req, res, next) => {
                 }
             }
         })
+    });
+    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
+    rq.finally(() => client.close());
+});
+
+app.post("/api/addBase64CloudinaryImage", (req, res, next) => {
+    let codOp = req["body"].codOp;
+    let imgBase64 = req["body"].imgBase64;
+    console.log(codOp)
+    _cloudinary.v2.uploader.upload(imgBase64, { "folder": "Es_03_Upload" })
+        .catch((err) => {
+            res.status(500).send(`Error while uploading file on Cloudinary: ${err}`);
+        })
+        .then(async function (response: UploadApiResponse) {
+            const client = new MongoClient(connectionString);
+            await client.connect();
+            let collection = client.db(DBNAME).collection("periti");
+            let rq = collection.findOne({ "codOperatore": codOp });
+            console.log(response.secure_url)
+            rq.then((data) => res.send({ "url": response.secure_url }));
+            rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err}`));
+            rq.finally(() => client.close());
+        });
+});
+
+app.post("/api/addPerizia", async (req, res, next) => {
+    let json = req["body"].newPerizia;
+    console.log(json);
+    const client = new MongoClient(connectionString);
+    await client.connect();
+    const collection = client.db(DBNAME).collection("perizie");
+    let rq = collection.findOne({ "codOperatore": json.codOperatore, "data": json.data, "ora": json.ora, "coordinate": json.coordinate });
+    rq.then(async function (data) {
+        console.log(data);
+        if (data) {
+            res.status(409).send("Perizia già esistente");
+
+        }
+        else {
+            const client = new MongoClient(connectionString);
+            await client.connect();
+            const collection = client.db(DBNAME).collection("perizie");
+            let rq2 = collection.insertOne(json);
+            rq2.then((data) => res.send(data));
+            rq2.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
+            rq2.finally(() => client.close());
+        }
     });
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
@@ -559,23 +591,7 @@ app.post("/api/deletePerizia/:id", async (req, res, next) => {
 
 
 
-app.post("/api/addBase64CloudinaryImage", (req, res, next) => {
-    let codOp = req["body"].codOp;
-    let imgBase64 = req["body"].imgBase64;
-    _cloudinary.v2.uploader.upload(imgBase64, { "folder": "Es_03_Upload" })
-        .catch((err) => {
-            res.status(500).send(`Error while uploading file on Cloudinary: ${err}`);
-        })
-        .then(async function (response: UploadApiResponse) {
-            const client = new MongoClient(connectionString);
-            await client.connect();
-            let collection = client.db(DBNAME).collection("periti");
-            let rq = collection.findOne({ "codOperatore": codOp });
-            rq.then((data) => res.send({ "url": response.secure_url }));
-            rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err}`));
-            rq.finally(() => client.close());
-        });
-});
+
 
 
 
@@ -622,6 +638,16 @@ app.get("/api/getPerizia/:id", async (req, res, next) => {
     await client.connect();
     const collection = client.db(DBNAME).collection("perizie");
     let rq = collection.findOne({ "_id": _id });
+    rq.then((data) => res.send(data));
+    rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
+    rq.finally(() => client.close());
+});
+app.get("/api/getPerizie/:cod", async (req, res, next) => {
+    let cod = req["params"].cod;
+    const client = new MongoClient(connectionString);
+    await client.connect();
+    const collection = client.db(DBNAME).collection("perizie");
+    let rq = collection.find({ "codOperatore": cod}).toArray();
     rq.then((data) => res.send(data));
     rq.catch((err) => res.status(500).send(`Errore esecuzione query: ${err.message}`));
     rq.finally(() => client.close());
