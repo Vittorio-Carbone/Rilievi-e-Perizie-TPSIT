@@ -1,4 +1,10 @@
 <div id="divProfilo">
+    @if (loader) {
+        <div class="divload">
+          <div class="loader"></div>
+        </div>
+      
+    }
     <div id="title">
         Informazioni operatore
         <ion-icon name="exit-outline" size="large" id="edit" slot="end" (click)="logOut()"></ion-icon>

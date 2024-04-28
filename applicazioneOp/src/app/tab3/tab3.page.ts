@@ -1,5 +1,4 @@
 declare let google: any;
-import { ViewportScroller } from '@angular/common';
 import { Geolocation } from '@capacitor/geolocation';
 import { Component } from '@angular/core';
 import { PhotoService } from '../services/photo.service';
@@ -11,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-
+  loader: boolean = true;
   coord: any;
   latOp: any;
   lngOp: any;
@@ -26,14 +25,13 @@ export class Tab3Page {
   id: any;
   lunghezza: any="";
   durata: any="";
-  constructor(private viewportScroller: ViewportScroller,private route: ActivatedRoute, public photoService: PhotoService, public dataStorageService: DataStorageService, public router: Router) { }
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute, public photoService: PhotoService, public dataStorageService: DataStorageService, public router: Router) { }
+  ionViewDidEnter(): void {
     let promise: any = [];
     const printCurrentPosition = async () => {
       const coordinates = await Geolocation.getCurrentPosition();
       let latOp = coordinates.coords.latitude;
       let lngOp = coordinates.coords.longitude;
-      console.log("Coord current "+latOp, lngOp)
       return latOp + " " + lngOp;
     };
     promise.push(printCurrentPosition());
@@ -59,7 +57,7 @@ export class Tab3Page {
           "next": (data: any) => {
             console.log(data);
             this.perizie = data
-
+            this.loader = false;
           },
           "error": (error: any) => {
             console.log(error);
@@ -97,7 +95,6 @@ export class Tab3Page {
     this.mappa = true;
     let lat = parseFloat(coord.split(", ")[0]);
     let lng = parseFloat(coord.split(", ")[1]);
-    console.log("cord perizia "+lat, lng);
     caricaGoogleMaps().then(() => {
       const directionsService = new google.maps.DirectionsService();
       const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -118,10 +115,7 @@ export class Tab3Page {
       };
 
       directionsService.route(request,  (result: any, status: string) => {
-        console.log("ORIGINE"+this.latOp, this.lngOp)
-        console.log("DESTINAZIONE"+lat, lng)
         if (status == 'OK') {
-          console.log("rotta")
           directionsRenderer.setDirections(result);
 
           const route = result.routes[0];

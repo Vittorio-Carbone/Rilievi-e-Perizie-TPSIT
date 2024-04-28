@@ -14,6 +14,7 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
+  loader: boolean = false;
   currentPwd:string="";
   newPwd:string="";
   lblErr:boolean=false;
@@ -164,11 +165,11 @@ export class Tab2Page implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: (data) => {
+            this.loader = true;
             console.log(data.name1)
             let desc = this.photoService.descrizionePhoto;
             let photos = this.photoService.photos;
@@ -213,6 +214,7 @@ export class Tab2Page implements OnInit {
                   console.log(data);
                   this.photoService.photos = [];
                   this.photoService.descrizionePhoto = [];
+                  this.loader = false;
                 },
                 "error": (error) => {
                   console.log(error);

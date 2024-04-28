@@ -72,3 +72,31 @@ h4{
     color: #721c24;
     border: 1px solid #721c24;
 }
+
+
+
+// ================================================= LOADER =================================================
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #84cbfb;
+    border-radius: 50%;
+    width: 120px !important; 
+    height: 120px !important;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(360deg); }
+    100% { transform: rotate(720deg); }
+}
+
+.divload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    z-index: 1001 ;
+    background-color: rgba(0, 0, 0, 0.1); 
+}

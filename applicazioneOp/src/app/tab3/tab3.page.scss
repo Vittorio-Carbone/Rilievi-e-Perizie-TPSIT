@@ -127,3 +127,29 @@
     justify-content: space-between;
     align-items: center;
 }
+
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #88cfff;
+    border-radius: 50%;
+    width: 120px !important; 
+    height: 120px !important;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(360deg); }
+    100% { transform: rotate(720deg); }
+}
+
+.divload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    z-index: 1001 !important;
+    background-color: rgba(0, 0, 0, 0.1); 
+}
