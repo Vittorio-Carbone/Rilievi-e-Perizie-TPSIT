@@ -610,6 +610,7 @@ $(document).ready(async function () {
 		let descrizione = $("#txtAreaPop").val();
 		let rq = inviaRichiesta("post", "/api/deleteFotoPerizia/" + _id, { "url": img, "descrizione": descrizione });
 		rq.then(function (response) {
+			console.log(response.data)	
 			modificaInfo(response.data);
 			caricaMarkers();
 			$("#overlay").fadeOut(500);

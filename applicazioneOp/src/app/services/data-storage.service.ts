@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class DataStorageService {
-  private REST_API_SERVER = "https://localhost:3000/api";
+  private REST_API_SERVER = "https://rilieviserver.onrender.com/api";
 
   constructor(private httpClient: HttpClient) { }
 

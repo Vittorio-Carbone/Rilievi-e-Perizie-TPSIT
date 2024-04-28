@@ -656,6 +656,8 @@ app.post("/api/deleteFotoPerizia/:id", async (req, res, next) => {
     let id = new ObjectId(req["params"].id);
     let img = req["body"].url;
     let descrizione = req["body"].descrizione;
+    console.log(typeof req["body"].url, typeof req["body"].descrizione)
+    console.log(img, descrizione)
     const client = new MongoClient(connectionString);
     await client.connect();
     const collection = client.db(DBNAME).collection("perizie");
