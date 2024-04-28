@@ -258,9 +258,9 @@ $(document).ready(async function () {
 				if (codOperatore == 0 || codOperatore == perizia.codOperatore) {
 					let coordinate = perizia.coordinate.trim().split(",");
 					var infoWindow = new google.maps.InfoWindow({
-						content: `<p>Perizia del ${perizia.data}</p>` +
-							`<button class="getDirections" onclick="getDirections(${coordinate[0]}, ${coordinate[1]})">Ottieni indicazioni</button>` +
-							`<br><br><button onclick='modificaInfo(${JSON.stringify(perizia)})'>Visualizza informazioni</button>`
+						content: `<p style="font-weight:bold;font-size:11pt">Perizia del ${perizia.data}</p>` +
+							`<button class="getDirections buttonInfo" onclick="getDirections(${coordinate[0]}, ${coordinate[1]})">Ottieni indicazioni</button>` +
+							`<br><br><button class="buttonInfo" onclick='modificaInfo(${JSON.stringify(perizia)})'>Visualizza informazioni</button>`
 					});
 					var marker = new google.maps.Marker({
 						position: new google.maps.LatLng(coordinate[0], coordinate[1]),

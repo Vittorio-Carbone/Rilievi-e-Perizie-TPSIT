@@ -45,9 +45,35 @@ export class Tab2Page implements OnInit {
 
 
   next() {
+    if (this.photoService.photos.length == 0) {
+      this.fotoZero();
+    }
+    else {
+      this.descrizionePer();
+    }
 
-    this.descrizionePer();
-
+  }
+  async fotoZero() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Sei sicuro di voler creare una nuova perizia senza foto?',
+      buttons: [{
+        text: 'Conferma',
+        role: 'confirm',
+        handler: () => {
+          // cosa fa se clicco su CONFERMA
+          this.descrizionePer();
+        }
+      }, {
+        text: 'Annulla',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          // cosa fa se clicco su ANNULLA
+          // Non fare nulla, l'azione viene semplicemente annullata
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 
 

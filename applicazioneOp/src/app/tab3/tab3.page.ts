@@ -33,6 +33,7 @@ export class Tab3Page {
       const coordinates = await Geolocation.getCurrentPosition();
       let latOp = coordinates.coords.latitude;
       let lngOp = coordinates.coords.longitude;
+      console.log("Coord current "+latOp, lngOp)
       return latOp + " " + lngOp;
     };
     promise.push(printCurrentPosition());
@@ -96,12 +97,12 @@ export class Tab3Page {
     this.mappa = true;
     let lat = parseFloat(coord.split(", ")[0]);
     let lng = parseFloat(coord.split(", ")[1]);
-
+    console.log("cord perizia "+lat, lng);
     caricaGoogleMaps().then(() => {
       const directionsService = new google.maps.DirectionsService();
       const directionsRenderer = new google.maps.DirectionsRenderer();
 
-      const map = new google.maps.Map(document.getElementById('map'), {
+      let map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         center: { lat: this.latOp, lng: this.lngOp },
         mapTypeControl: false,
@@ -110,14 +111,17 @@ export class Tab3Page {
 
       directionsRenderer.setMap(map);
 
-      const request = {
+      let request = {
         origin: { lat: this.latOp, lng: this.lngOp },
         destination: { lat: lat, lng: lng },
         travelMode: 'DRIVING'
       };
 
       directionsService.route(request,  (result: any, status: string) => {
+        console.log("ORIGINE"+this.latOp, this.lngOp)
+        console.log("DESTINAZIONE"+lat, lng)
         if (status == 'OK') {
+          console.log("rotta")
           directionsRenderer.setDirections(result);
 
           const route = result.routes[0];
@@ -128,14 +132,13 @@ export class Tab3Page {
 
           this.lunghezza = distance;
           this.durata = duration;
+
+
+          
         }
       });
 
-      directionsService.route(request, function (result: any, status: string) {
-        if (status == 'OK') {
-          directionsRenderer.setDirections(result);
-        }
-      });
+      
     }).catch((error) => {
       console.error("Errore caricamento GoogleMaps", error);
     });

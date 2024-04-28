@@ -39,41 +39,7 @@ export class Tab1Page {
       });
     }
   }
-  loginGoogle() {
-    console.log(this.username + " " + this.pwd);
-    // google.accounts.id.initialize({
-    //   "client_id": oAuthId,
-    //   "callback": function (response) {
-    //     if (response.credential !== "") {
-    //       let token = response.credential
-    //       console.log("token:", token)
-    //       localStorage.setItem("token", token)
-    //       /* window.location.href = "index.html" oppure */
-    //       this.dataStorageService.inviaRichiesta('post', '/googleLogin')?.subscribe({
-    //         "next": (data:any) => {
-    //           let _id = data._id;
-    //           window.location.href = `index.html?id=${_id}`
-    //         },
-    //         "error": (error:any) => {
-    //           console.log(error);
-    //         }
-    //       });
-    //     }
-    //   }
-    // })
-    // google.accounts.id.renderButton(
-    //   document.getElementById("googleDiv"), // qualunque tag DIV della pagina
-    //   {
-    //     "theme": "outline",
-    //     "size": "large",
-    //     "type": "standard",
-    //     "text": "continue_with",
-    //     "shape": "rectangular",
-    //     "logo_alignment": "center"
-    //   }
-    // );
-    // google.accounts.id.prompt();
-  }
+  
   login() {
     let username = this.username;
     let pwd = this.pwd;
