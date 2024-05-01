@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  newPass: boolean = false;
   loader: boolean = true;
   coord: any;
   latOp: any;
@@ -141,7 +142,20 @@ export class Tab3Page {
 
 
 
-
+  changePass(){
+    this.dataStorageService.inviaRichiesta('post','/nuovaPassword',{"username":this.user.email})?.subscribe({
+      "next": (data: any) => {
+        console.log(data);
+        this.newPass = true;
+        setInterval(() => {
+          this.newPass = false;
+        }, 5000);
+      },
+      "error": (error: any) => {
+        console.log(error);
+      }
+    });
+  }
 
 
 

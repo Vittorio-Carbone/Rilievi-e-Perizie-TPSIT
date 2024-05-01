@@ -14,28 +14,29 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
+  fotoAdd: boolean = false;
   loader: boolean = false;
-  currentPwd:string="";
-  newPwd:string="";
-  lblErr:boolean=false;
-  log: boolean=false;
-  constructor(private route: ActivatedRoute,private router: Router, private dataStorageService: DataStorageService, public alertController: AlertController, public photoService: PhotoService, public actionSheetController: ActionSheetController) { }
+  currentPwd: string = "";
+  newPwd: string = "";
+  lblErr: boolean = false;
+  log: boolean = false;
+  constructor(private route: ActivatedRoute, private router: Router, private dataStorageService: DataStorageService, public alertController: AlertController, public photoService: PhotoService, public actionSheetController: ActionSheetController) { }
   ngOnInit(): void {
     let id;
-    if(this.photoService.user._id==undefined){
-    id = this.route.snapshot.paramMap.get('id');
-    }else{
+    if (this.photoService.user._id == undefined) {
+      id = this.route.snapshot.paramMap.get('id');
+    } else {
       console.log(this.photoService.user);
-      id=this.photoService.user._id;
+      id = this.photoService.user._id;
     }
     console.log(id);
-    this.dataStorageService.inviaRichiesta('get', '/getPerito/'+id)?.subscribe({
+    this.dataStorageService.inviaRichiesta('get', '/getPerito/' + id)?.subscribe({
       "next": (data: any) => {
         console.log(data);
-        this.photoService.user=data;
-        if(this.photoService.user.newPass){
-          this.log=true;
-          this.photoService.newPass=true;
+        this.photoService.user = data;
+        if (this.photoService.user.newPass) {
+          this.log = true;
+          this.photoService.newPass = true;
         }
       },
       "error": (error: any) => {
@@ -201,20 +202,32 @@ export class Tab2Page implements OnInit {
                 "foto": []
               }
               let foto: any = []
-              let promise:any=[];
+              let promise: any = [];
               for (let [index, photo] of photos.entries()) {
-                promise.push(firstValueFrom(this.dataStorageService.inviaRichiesta('post', '/addBase64CloudinaryImage', { "codOp": 1, "imgBase64": photo })!))
                 
+                if (photo.startsWith("data:image/jpeg;base64,")) {
+                  promise.push(firstValueFrom(this.dataStorageService.inviaRichiesta('post', '/addBase64CloudinaryImage', { "codOp": 1, "imgBase64": photo })!))
+                }
+                else {
+                  promise.push(firstValueFrom(this.dataStorageService.inviaRichiesta('post', '/addBase64CloudinaryImage', { "codOp": 1, "imgBase64": "data:image/jpeg;base64,"+photo })!))
+                }
+                this.photoService.photos[index] = photo;
+
               }
-              foto=await Promise.all(promise);
-              foto=foto.map((data:any,index:number)=>({ "descrizioneFoto": desc[index], "url": data.url }));
-              perizia.foto=foto;
+              foto = await Promise.all(promise);
+              foto = foto.map((data: any, index: number) => ({ "descrizioneFoto": desc[index], "url": data.url }));
+              perizia.foto = foto;
               this.dataStorageService.inviaRichiesta('post', '/addPerizia', { "newPerizia": perizia })?.subscribe({
                 "next": (data) => {
                   console.log(data);
+                  console.log(this.photoService.photos)
                   this.photoService.photos = [];
                   this.photoService.descrizionePhoto = [];
                   this.loader = false;
+                  this.fotoAdd = true;
+                  setTimeout(() => {
+                    this.fotoAdd = false;
+                  },5000)
                 },
                 "error": (error) => {
                   console.log(error);
@@ -233,18 +246,18 @@ export class Tab2Page implements OnInit {
   }
 
 
-  changePwd(){
-    this.dataStorageService.inviaRichiesta('post', '/cambiaPassword', { "id":this.photoService.user._id,"currentPassword": this.currentPwd,"newPassword": this.newPwd})?.subscribe({
+  changePwd() {
+    this.dataStorageService.inviaRichiesta('post', '/cambiaPassword', { "id": this.photoService.user._id, "currentPassword": this.currentPwd, "newPassword": this.newPwd })?.subscribe({
       "next": (data: any) => {
         console.log(data);
-        this.photoService.newPass=false;
-        this.log=false;
+        this.photoService.newPass = false;
+        this.log = false;
       },
       "error": (error: any) => {
         console.log(error);
-        this.lblErr=true;
+        this.lblErr = true;
         setTimeout(() => {
-          this.lblErr=false;
+          this.lblErr = false;
         })
       }
     });

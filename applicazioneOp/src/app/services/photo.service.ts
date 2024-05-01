@@ -39,11 +39,9 @@ export class PhotoService {
     console.log(capturedPhoto);
     // Save the picture and add it to photo collection
     const savedImageFile = await this.savePicture(capturedPhoto);
-    console.log(savedImageFile);
     this.photos.unshift(savedImageFile);
     this.descrizionePhoto.unshift('');
 
-    
 
   }
 

@@ -28,12 +28,12 @@
 
 .profile-picture {
     flex-shrink: 0;
-    margin-right: 20px;
+    margin-right: 5px;
 }
 
 .profile-picture img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
 }
 
@@ -77,6 +77,13 @@
     word-wrap: break-word !important;
     white-space: normal !important;
 }
+#mailSpan{
+    font-size: 10pt;
+    width: 100px !important;
+    color: black;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+}
 
 .titlePer::ng-deep {
     font-weight: 700;
@@ -98,6 +105,24 @@
     border-right: 1px solid gray;
 }
 
+#newPassword{
+    margin-left: 28.5%;
+    margin-right: 28.5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: red;
+    border: 1px solid red;
+    background-color: #ffdcdc;
+    cursor: pointer;
+    font-size: 13pt;
+    padding: 10px;
+    border-radius: 15px;
+
+    &:hover {
+        background-color: #f9a3a3;
+    }
+
+}
 
 // ================================================= MAPPA =================================================
 #map {

@@ -1,7 +1,7 @@
 @if (loader) {
-  <div class="divload">
-    <div class="loader"></div>
-  </div>
+<div class="divload">
+  <div class="loader"></div>
+</div>
 
 }
 @if(!log){
@@ -17,11 +17,14 @@
 </ion-header>
 
 <ion-content>
+  @if(fotoAdd){
+    <div id="divAdd">Perizia aggiunta con successo!</div>
+  }
   <div id="img">
     <ion-grid>
       <ion-row>
         <ion-col size="12" *ngFor="let photo of photoService.photos; index as position">
-          <ion-img [src]="photo" (click)="showActionSheet(photo, position)"></ion-img>
+          <img [src]="'data:image/jpeg;base64,'+photo" (click)="showActionSheet(photo, position)" />
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -46,11 +49,13 @@
     <form style="margin-top: 15px;">
       <div class="form-group">
         <label for="currentPassword">Password corrente</label>
-        <input type="password" class="form-control" id="currentPassword" placeholder="Inserisci la password corrente" [(ngModel)]="currentPwd" name="passwrodCorrente">
+        <input type="password" class="form-control" id="currentPassword" placeholder="Inserisci la password corrente"
+          [(ngModel)]="currentPwd" name="passwrodCorrente">
       </div>
       <div class="form-group">
         <label for="newPassword">Nuova password</label>
-        <input type="password" class="form-control" id="newPassword" placeholder="Inserisci la nuova password" [(ngModel)]="newPwd" name="passwordNuova">
+        <input type="password" class="form-control" id="newPassword" placeholder="Inserisci la nuova password"
+          [(ngModel)]="newPwd" name="passwordNuova">
       </div>
       <div id="lblErrore" *ngIf="lblErr">
         <strong>Password corrente errata!</strong>

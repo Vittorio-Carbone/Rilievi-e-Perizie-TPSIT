@@ -17,7 +17,7 @@
             <p><strong>Codice operatore:</strong> <span> {{user.codOperatore}}</span></p>
             <p><strong>Nome:</strong> <span> {{user.nome}}</span></p>
             <p><strong>Cognome:</strong> <span> {{user.cognome}}</span></p>
-            <p><strong>Email:</strong> <span> {{user.email}}</span></p>
+            <p><strong>Email:</strong> <span id="mailSpan"> {{user.email}}</span></p>
         </div>
     </div>
     @if (mappa) {
@@ -56,5 +56,13 @@
             </div>
         </div>
         }
+    </div>
+    <div style="width: 100% !important;">
+        @if (newPass) {
+            <div style="margin-left:5%;margin-right:5%;width: 90%;color: green;background-color: rgb(195, 255, 195);border: 1px solid rgb(0, 194, 0);border-radius: 5px;padding: 10px;">
+                La nuova password è sulla tua email! Effettuare il login con la nuova password per poterla cambiare.
+            </div>
+        }
+        <button id="newPassword" (click)="changePass()">Cambia password</button>
     </div>
 </div>
