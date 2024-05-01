@@ -44,7 +44,7 @@
                 <div class="titlePer">Perizia {{$index+1}}</div>
                 <div style="display: flex;align-items: center;"><ion-icon name="calendar"
                         style="margin-bottom: 13px; margin-right: 4px;"></ion-icon>
-                    <div class="datePer">{{perizia.data}}</div>
+                    <div class="datePer">{{perizia.data.replaceAll("-","/").replaceAll("20","")}}</div>
                 </div>
                 <div style="display: flex;align-items: center;"><ion-icon name="time"
                         style="margin-right: 4px;"></ion-icon>

@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^17.0.2",
     "@angular/platform-browser-dynamic": "^17.0.2",
     "@angular/router": "^17.0.2",
-    "@capacitor/android": "^6.0.0",
+    "@capacitor/android": "6.0.0",
     "@capacitor/app": "6.0.0",
     "@capacitor/camera": "^6.0.0",
     "@capacitor/core": "^6.0.0",
@@ -36,6 +36,8 @@
     "google": "^2.1.0",
     "google-auth-library": "^9.9.0",
     "ionicons": "^7.0.0",
+    "js-base64": "^3.7.7",
+    "ngx-base64": "^0.1.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

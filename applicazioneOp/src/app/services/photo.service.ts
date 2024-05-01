@@ -10,7 +10,7 @@ import { DataStorageService } from './data-storage.service';
 })
 export class PhotoService {
   public newPass: boolean = false;
-  public user: any=[];
+  public user: any = [];
   public _id: any;
   public photos: any[] = [];
   public descrizionePhoto: any[] = [];
@@ -19,6 +19,9 @@ export class PhotoService {
 
   private platform: Platform;
   photoService: any;
+
+  base64ToImage: any;
+  image: any;
 
   constructor(platform: Platform, private dataStorageService: DataStorageService) {
     this.platform = platform;
@@ -33,12 +36,14 @@ export class PhotoService {
       quality: 100
     });
 
+    console.log(capturedPhoto);
     // Save the picture and add it to photo collection
     const savedImageFile = await this.savePicture(capturedPhoto);
+    console.log(savedImageFile);
     this.photos.unshift(savedImageFile);
     this.descrizionePhoto.unshift('');
 
-
+    
 
   }
 
@@ -68,6 +73,20 @@ export class PhotoService {
       return await this.convertBlobToBase64(blob) as string;
     }
   }
+
+ public async blobToBase64(blob: Blob): Promise<string> {
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => {
+      if (reader.result) {
+        resolve(reader.result.toString().replace(/^data:,/, ''));
+      } else {
+        reject(new Error('Error reading Blob'));
+      }
+    };
+    reader.readAsDataURL(blob);
+  });
+}
 
   private convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader();

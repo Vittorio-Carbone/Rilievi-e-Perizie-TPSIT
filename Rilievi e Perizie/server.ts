@@ -246,7 +246,7 @@ app.post("/api/nuovaPassword", async (req, res, next) => {
 
     let mailOptions = {
         from: process.env.AUTHUSER,
-        to: "vittoriocarbone.vc.vc@gmail.com",
+        to: username,
         subject: "Reimpostazione password",
         html: `
           
@@ -412,7 +412,7 @@ app.post("/api/addOperator", async (req, res, next) => {
 
     let mailOptions = {
         from: process.env.AUTHUSER,
-        to: "vittoriocarbone.vc.vc@gmail.com",
+        to: json.email,
         subject: "Password",
         html: `
           
